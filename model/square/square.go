@@ -1,8 +1,8 @@
 package square
 
 import (
-	"github.com/jaguilar/nethack/model/item"
-	"github.com/jaguilar/nethack/model/mon"
+	"github.com/jaguilar/nh/model/item"
+	"github.com/jaguilar/nh/model/mon"
 )
 
 // A Square is a single square within a Level. It has a Feature, which is a

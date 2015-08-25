@@ -1,6 +1,6 @@
 package mon
 
-import "github.com/jaguilar/nethack/model/item"
+import "github.com/jaguilar/nh/model/item"
 
 type Monster struct {
 	*Species

@@ -3,13 +3,14 @@ package model
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"io"
 	"sync"
 	"time"
 
-	"github.com/jaguilar/nethack/model/command"
-	"github.com/jaguilar/nethack/model/level"
-	"github.com/jaguilar/nethack/model/pc"
+	"github.com/jaguilar/nh/model/command"
+	"github.com/jaguilar/nh/model/level"
+	"github.com/jaguilar/nh/model/pc"
 	"github.com/jaguilar/vt100"
 )
 
@@ -86,6 +87,10 @@ type Game struct {
 // It is safe to examine this between calls to Do, but not during any given Do
 // call.
 func NewGame(in io.Reader, out io.Writer, win WindowSize) (*Game, error) {
+	if win.Y < 24 || win.X < 80 {
+		panic(fmt.Errorf("screen dimensions must be at least 24x80 (got: %dx%d)", win.Y, win.X))
+	}
+
 	cmds, errs := inputUntilClosed(in)
 	g := &Game{
 		Level:         make(map[level.LevelID]*level.Level),
@@ -172,9 +177,23 @@ func (g *Game) waitIdle() error {
 // To exit the game (even if you died, or the game crashed), you need to send
 // command.Quit.
 func (g *Game) Do(c command.Command) error {
-
+	// TODO(jaguilar): decide how to issue a command.
+	// TODO(jaguilar): ensure that the terminal didn't resume since the previous command.
 	if err := g.parse(); err != nil {
 		return err
 	}
 	return g.waitIdle()
+}
+
+// send tries to send s out to nethack. It keeps trying until it encounters an error
+// or successfully sends all the data. (There's really not much we can do if
+// nethack isn't accepting our input, so there's no point in doing otherwise.)
+func (g *Game) send(s string) error {
+	for s != "" {
+		i, err := io.WriteString(s, s.out)
+		if err != nil {
+			return err
+		}
+		s = s[i:]
+	}
 }

@@ -15,20 +15,7 @@ streams are owned by the Game and should not be used elsewhere.
 Game.Control blocks until the game ends or an unrecoverable error
 is encountered.
 
-The general mode of operation for a bot is:
-
-    if err := game.IdleLock(); err != nil {
-      // An error here probably indicates the end of a play session.
-      return err
-    }
-    var command model.Command = aistep(game)
-    // Issue unlocks the game, even if there is an error.
-    if err := game.Issue(command); err != nil {
-	  return err
-    }
-
-Please read the documentation for IdleLock and Issue for more details.
-You may not necessarily wish to give up every time Game.Issue returns
-an error.
+Please read the documentation for Game for more details on how to
+use the model.
 */
 package model

@@ -1,8 +1,8 @@
 package level
 
 import (
-	"github.com/jaguilar/nethack/model/mon"
-	"github.com/jaguilar/nethack/model/square"
+	"github.com/jaguilar/nh/model/mon"
+	"github.com/jaguilar/nh/model/square"
 )
 
 var (

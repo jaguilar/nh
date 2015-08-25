@@ -1,8 +1,8 @@
 package pc
 
 import (
-	"github.com/jaguilar/nethack/model/item"
-	"github.com/jaguilar/nethack/model/mon"
+	"github.com/jaguilar/nh/model/item"
+	"github.com/jaguilar/nh/model/mon"
 )
 
 // +gen stringer
