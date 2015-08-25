@@ -47,7 +47,7 @@ var (
 We erase from `id.Wands[wand.Plat]` any elements that don't match the
 price identification list. Later, we observe an oak wand being zapped and emitting
 a death ray. This immediately identifies the oak wand as the wand of death.
-So we set `id.Wands[wand.Oak] = []*wand.Class{wand.OfDeath}`. We also erase wand.OfDeath
+So we set `id.Wands[wand.Oak] = []*wand.Class{wand.OfDeath}`. We also erase `wand.OfDeath`
 from all of the other appearance lists. This leaves `id.Wands[wand.Platinum]` containing
 only a single element: `wand.OfWishing`.
 
