@@ -53,3 +53,39 @@ only a single element: `wand.OfWishing`.
 
 I believe that this eliminative approach will be sufficient for all identification purposes
 in the game.
+
+## Combat Tactics Sketch
+
+Combat tactics is a huge problem. There are two main subproblems:
+
+* When do we fight or run away?
+* How do we fight or run away?
+
+### Fight or Flight
+
+My best guess for this question at the moment is as follows:
+
+* Simulate the fight. If there is a high chance of winning without spending resources (most fights), fight.
+* If we'll probably lose, or would spend large resources to win, look at the alternatives. Is there anything
+else we could be doing right now elsewhere in the dungeon? If not, fight.
+* Simulate running away. Is there a good chance we can run in a useful direction? If not, fight.
+* Run.
+
+### How to Fight/Run
+
+We'll use minimax to determine how to fight. This approach is suitable for minimizing our
+loss function during the fight. How exactly we'll define the loss function is unclear.
+Obviously, `u.HP==0 -> -1`. We should also take away some points for using items -- the 
+rarer the item, the more loss. Meanwhile, all enemies dead is obviously the 1 outcome, or
+else us escaping the battle -- being able to leave the level -- if we're trying to run.
+
+We can use our knowledge of enemy movement to prune a bunch of possible nodes. For example,
+most enemies will not step away from us, and even if they would, it would be a worse move
+for them, so we'll not have to consider it.
+
+### Testing
+
+One of the nice aspects of this approach to combat is that it will be very testable with
+wizard mode. We can set up combat scenarios and run them repeatedly to see how well the algorithm
+handles various scenarios. We can also test the algorithm's estimates about win chances.
+It's not required that the win chance information be perfect, just that it be reasonable.
