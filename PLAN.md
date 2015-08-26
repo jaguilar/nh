@@ -87,5 +87,7 @@ for them, so we'll not have to consider it.
 
 One of the nice aspects of this approach to combat is that it will be very testable with
 wizard mode. We can set up combat scenarios and run them repeatedly to see how well the algorithm
-handles various scenarios. We can also test the algorithm's estimates about win chances.
-It's not required that the win chance information be perfect, just that it be reasonable.
+handles various scenarios. (To set up a combat scenario, you just wrap the bot in another bot
+that builds the scenario using ^G and ^W, before handing control over to the bot under test.)
+We can also test the algorithm's estimates about win chances. It's not required that the win
+chance information be perfect, just that it be reasonable.

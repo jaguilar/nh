@@ -27,9 +27,9 @@ var (
 )
 
 var (
-	// The maximum number of turns for which we keep events. Turns are measured
-	// not in nethack time units, but in number of opportunities for your bot
-	// to issue commands.
+	// MaxEventLookback is the number of actions for which we keep events.
+	// Actions are measured not in nethack time units, but in number of
+	// opportunities for your bot to issue commands.
 	MaxEventLookback = 100
 )
 
@@ -56,6 +56,36 @@ type WindowSize struct {
 	Y, X int
 }
 
+// TurnEvents is the list of events that occurred on a turn. A turn in this context
+// is not a unit of game time, your bot's issuance of a command.
+// +gen linkedlist
+type TurnEvents struct {
+	// All the events that happened on this turn.
+	E []string
+}
+
+type menuContext int
+
+const (
+	mcNone menuContext = iota
+
+	// Screen is showing some inventory list. Not necessarily the main inventory!
+	mcInv
+
+	// Screen is showing the spell list.
+	mcSpell
+
+	// Screen is showing the enhance list.
+	mcEnhance
+
+	// unhandled is a special context that indicates that we shouldn't try to
+	// parse the screen. If we're in this context, we remain in this context
+	// until the next time the top bar becomes empty.
+	mcUnhandled
+)
+
+// Game is the root game structure. Everything the model knows about the state
+// of a running game of nethack is found here.
 type Game struct {
 	// The player. Tip: for a nethack-like programming experience, define
 	// u in your package and have it point to this. This is assuming you are only
@@ -65,15 +95,15 @@ type Game struct {
 	// Level contains all the levels we've seen.
 	Level map[level.LevelID]*level.Level
 
-	// TODO(jaguilar): adjust this to the Event interface once we actually parse
-	// each event.
-	Events [][]string
+	Events *TurnEventsList
 
 	// in and out are the input stream from and output stream to nethack.
 	out io.Writer
 
 	vt       *vt100.VT100
 	mu, vtMu sync.Mutex
+
+	menuContext
 
 	inputCommands <-chan vt100.Command
 	inputErrs     <-chan error
@@ -94,11 +124,9 @@ func NewGame(in io.Reader, out io.Writer, win WindowSize) (*Game, error) {
 	cmds, errs := inputUntilClosed(in)
 	g := &Game{
 		Level:         make(map[level.LevelID]*level.Level),
-		Events:        make([][]string, MaxEventLookback),
-		in:            bufio.NewReader(in),
+		Events:        NewTurnEventsList(),
 		out:           out,
 		vt:            vt100.NewVT100(win.Y, win.X),
-		err:           make(chan error),
 		inputCommands: cmds,
 		inputErrs:     errs,
 	}
@@ -190,10 +218,11 @@ func (g *Game) Do(c command.Command) error {
 // nethack isn't accepting our input, so there's no point in doing otherwise.)
 func (g *Game) send(s string) error {
 	for s != "" {
-		i, err := io.WriteString(s, s.out)
+		i, err := io.WriteString(g.out, s)
 		if err != nil {
 			return err
 		}
 		s = s[i:]
 	}
+	return nil
 }

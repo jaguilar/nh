@@ -23,5 +23,5 @@ type Engraving struct {
 }
 
 func (e Engraving) Elbereths() int {
-	return strings.Count(e, "elbereth") + strings.Count(e, "Elbereth")
+	return strings.Count(e.string, "elbereth") + strings.Count(e.string, "Elbereth")
 }
