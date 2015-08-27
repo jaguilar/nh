@@ -14,13 +14,8 @@ type Item struct {
 	// Has the item been Fixed? (Is it rustproof, fireproof, etc.?)
 	Fixed bool
 
-	Category
-
 	// Nil if we don't know the exact class (e.g. this is an unidentified potion).
-	*Class
-
-	// Called is what we've called the item, if we've called the item's category something.
-	Called string
+	Class
 
 	// Named is what we've named this individual stack of items, if we've named this individual stack
 	// something.
@@ -93,13 +88,17 @@ const (
 //
 // An empty string means the exact class is not known.
 type Class struct {
-	Name string
+	Name   string
+	Called string
+
+	// TODO(jaguilar): for appearance-based classes: fill in the true class when
+	// it's known?
 	MaterialType
 }
 
 // Erosion describes the erodedness of an item.
 type Erosion struct {
-	Rusted, Corroded, Burnt, Rotted ErosionLevel
+	Rusty, Corroded, Burnt, Rotted ErosionLevel
 }
 
 func (e Erosion) String() string {
@@ -114,8 +113,8 @@ func (e Erosion) String() string {
 
 	// Corrosion needs to be displayed before rust. Other than iron, items cannot
 	// have multiple erosions so there is no need to control for the display ordering.
-	if e.Rusted != Uneroded {
-		parts = append(parts, withPrefix(e.Rusted, "rusty"))
+	if e.Rusty != Uneroded {
+		parts = append(parts, withPrefix(e.Rusty, "rusty"))
 	}
 	if e.Corroded != Uneroded {
 		parts = append(parts, withPrefix(e.Corroded, "corroded"))
@@ -164,14 +163,13 @@ type Enhancement int
 // Charge tells the charge state of an item. If the item is of a type that is
 // not chargeable, or if the charge is not known, Known will be set to false.
 type Charge struct {
-	Known        bool
 	Cur, Max     int
 	TimesCharged int
 }
 
 func (c Charge) String() string {
-	if !c.Known {
-		return ""
+	if c.Max == 0 && c.Cur == 0 {
+		return "unknown"
 	}
 	if c.Max < c.Cur {
 		return "charged"

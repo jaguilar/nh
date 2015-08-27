@@ -1,18 +1,66 @@
 package item
 
 import (
-	"errors"
+	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
 // Parse parses an item string and returns an appropriate *Item for that string.
 func Parse(s string) (*Item, error) {
-	return nil, errors.New("unimplemented")
+	m := matchMap(itemRe, itemRe.FindStringSubmatch(s))
+	if m == nil {
+		return nil, fmt.Errorf("mismatch vs item regexp: %s", s)
+	}
+
+	i := &Item{}
+	if t, ok := m["type"]; ok {
+		i.Class.Name = t
+	}
+
+	if c, ok := m["called"]; ok {
+		i.Class.Called = c
+	}
+
+	if n, ok := m["named"]; ok {
+		i.Named = n
+	}
+
+	if bucStr, ok := m["buc"]; ok {
+		i.BUC = parseBUC(bucStr)
+	}
+
+	if charge, ok := m["charge"]; ok {
+		maxCharge, ok := m["maxcharge"]
+		if !ok {
+			return nil, fmt.Errorf("maxcharge not set but charge is: %s", s)
+		}
+		var err error
+		i.Charge.Cur, err = strconv.Atoi(charge)
+		if err != nil {
+			return nil, err
+		}
+		i.Charge.Max, err = strconv.Atoi(maxCharge)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if _, ok := m["fixedness"]; ok {
+		// The only way this turns up is if the item is indeed fixed.
+		i.Fixed = true
+	}
+
+	if erosion, ok := m["erosions"]; ok {
+		i.Erosion = parseErosion(erosion)
+	}
+
+	return i, nil
 }
 
-// alternates returns an uncaptured regexp that matches any one of a group of alternate
-// regular expressions.
+// alternates returns a wrapped, uncaptured regexp that matches any one of a
+// group of alternate regular expressions.
 func alternates(inRe ...string) string {
 	var anon []string
 	for _, s := range inRe {
@@ -23,20 +71,18 @@ func alternates(inRe ...string) string {
 
 // matchMap returns a map of each subexpression name to its match, if any.
 // A nil return value indicates no match.
-func matchMap(re *regexp.Regexp, s string) map[string]string {
-	submatches := re.FindStringSubmatch(s)
-	if submatches == nil {
+func matchMap(re *regexp.Regexp, s []string) map[string]string {
+	if s == nil {
 		return nil
 	}
-
 	m := make(map[string]string)
 	for i, subexpName := range re.SubexpNames() {
-		if subexpName == "" || submatches[i] == "" {
+		if subexpName == "" || s[i] == "" {
 			// Unnamed subexpressions are not reported.
 			continue
 		}
 
-		m[subexpName] = submatches[i]
+		m[subexpName] = s[i]
 	}
 	return m
 }
@@ -55,22 +101,29 @@ var (
 	ordinal      = " (?P<ordinal>" + alternates("an", "a", "the", "\\d{1,2}") + ")"
 	buc          = "(?: (?P<buc>" + alternates("blessed", "uncursed", "cursed") + "))?"
 	greased      = "(?: (?P<greased>greased))?"
-	erosionLevel = alternates(" thoroughly", " very") + "?" // May not appear.
-	fixedness    = "(?P<fixedness> " + alternates(`\w*proof`, "fixed") + ")?"
-	erosionType  = alternates("rusty", "burnt", "corroded", "rotted")
-	oneErosion   = erosionLevel + " " + erosionType + fixedness
-	erosions     = "(?P<erosions>(?:" + oneErosion + ")*)"                 // Any number of erosions.
-	ench         = `(?: (?P<ench>(?:\+|-)\d{1,3}))?`                       // May not appear.
-	itype        = `(?: (?P<type>.+?))`                                    // Non-greedy typename capture.
-	charge       = `(?: \((?P<charge>\d{1,3}):(?P<maxcharge>\d{1,3})\))?$` // The charge may or may not appear at the end.
+	erosionLevel = "(?: (?P<erosionlevel>" + alternates("thoroughly", "very") + "))?"
 
-	itemRe = regexp.MustCompile(slot + ordinal + buc + greased + erosions + ench + itype + charge)
+	erosionType = "(?: (?P<erosiontype>" + alternates("rusty", "burnt", "corroded", "rotted") + "))"
+	oneErosion  = erosionLevel + "?" + erosionType
+	erosion     = "(?P<erosions>(?:" + oneErosion + ")*)"
+
+	fixedness = "(?: (?P<fixedness>" + alternates(`\w*proof`, "fixed") + "))?"
+	ench      = `(?: (?P<ench>(?:\+|-)\d{1,3}))?`
+	itype     = `(?: (?P<type>.+?))`
+	called    = `(?: called (?P<called>.+?))?`
+	named     = `(?: named (?P<named>.+?))?`
+	charge    = `(?: \((?P<charge>\d{1,3}):(?P<maxcharge>\d{1,3})\))?$`
+
+	itemRe = regexp.MustCompile(
+		slot + ordinal + buc + greased + erosion + fixedness + ench + itype + called + named + charge)
+
+	erosionRe = regexp.MustCompile(oneErosion)
 )
 
 // ParseBUC parses a BUC string from nethack. This cannot return Noncursed,
 // because that is an inferred status, not one that is displayed in-game.
 // Any malformed input will yield BUCUnknown, as will the empty string.
-func ParseBUC(s string) BUC {
+func parseBUC(s string) BUC {
 	switch s {
 	case "uncursed":
 		return Uncursed
@@ -80,5 +133,41 @@ func ParseBUC(s string) BUC {
 		return Cursed
 	default:
 		return BUCUnknown
+	}
+}
+
+func parseErosion(s string) Erosion {
+	var e Erosion
+	matches := erosionRe.FindAllStringSubmatch(s, -1)
+	if matches == nil {
+		return e
+	}
+
+	for _, match := range matches {
+		m := matchMap(erosionRe, match)
+		l := parseErosionLevel(m["erosionlevel"])
+		switch m["erosiontype"] {
+		case "corroded":
+			e.Corroded = l
+		case "rusty":
+			e.Rusty = l
+		case "burnt":
+			e.Burnt = l
+		case "rotted":
+			e.Rotted = l
+		}
+	}
+
+	return e
+}
+
+func parseErosionLevel(s string) ErosionLevel {
+	switch s {
+	case "thoroughly":
+		return ThoroughlyEroded
+	case "very":
+		return VeryEroded
+	default:
+		return Eroded
 	}
 }
