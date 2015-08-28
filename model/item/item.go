@@ -14,12 +14,19 @@ type Item struct {
 	// Has the item been Fixed? (Is it rustproof, fireproof, etc.?)
 	Fixed bool
 
-	// Nil if we don't know the exact class (e.g. this is an unidentified potion).
-	Class
+	// The shared item class for this object.
+	*Class
 
 	// Named is what we've named this individual stack of items, if we've named this individual stack
 	// something.
 	Named string
+
+	// The letter this item has in our inventory, if any.
+	//
+	// Note: if the item is being examined in a scenario where it has no permanent mapping,
+	// such as when looting or in a bag, it will probably be expressed as an ephemeral map
+	// of rune->*Item. Its inventory letter will be zero.
+	InventoryLetter rune
 
 	Charge
 
@@ -41,60 +48,6 @@ const (
 	Blessed
 	Cursed
 )
-
-// Category is the category of an item.
-type Category rune
-
-// The various item categories.
-const (
-	Amulet        Category = '"'
-	Armor                  = '['
-	Boulder                = '`'
-	HeavyIronBall          = '0'
-	Coins                  = '$'
-	Comestible             = '%'
-	Gem                    = '*'
-	IronChain              = '_'
-	Potion                 = '!'
-	Scroll                 = '?'
-	Spellbook              = '+'
-	Statue                 = '`'
-	Ring                   = '='
-	Tool                   = '('
-	Wand                   = '/'
-	Weapon                 = ')'
-)
-
-// MaterialType is the matter that makes up an item.
-type MaterialType int
-
-// Various materials. Might not include all materials in the game.
-const (
-	MaterialUnspecified MaterialType = iota
-	Iron
-	Copper
-	Wood
-	Leather
-	Cloth
-	Plastic
-)
-
-// Class is the exact class of an item. For example "silver arrow" is a class.
-//
-// The model will report an item as having a given class when the class has been
-// conclusively inferred, whether or not Nethack knows that the item is of that class.
-// It is an invariant that the model should always report the same class for an item
-// if the item is subsequently identified and parsed.
-//
-// An empty string means the exact class is not known.
-type Class struct {
-	Name   string
-	Called string
-
-	// TODO(jaguilar): for appearance-based classes: fill in the true class when
-	// it's known?
-	MaterialType
-}
 
 // Erosion describes the erodedness of an item.
 type Erosion struct {

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/jaguilar/nh/model/command"
+	"github.com/jaguilar/nh/model/internal/screen"
 	"github.com/jaguilar/nh/model/level"
 	"github.com/jaguilar/nh/model/pc"
 	"github.com/jaguilar/vt100"
@@ -103,7 +104,7 @@ type Game struct {
 	vt       *vt100.VT100
 	mu, vtMu sync.Mutex
 
-	menuContext
+	lastMenu screen.MenuFormat
 
 	inputCommands <-chan vt100.Command
 	inputErrs     <-chan error
@@ -207,9 +208,7 @@ func (g *Game) waitIdle() error {
 func (g *Game) Do(c command.Command) error {
 	// TODO(jaguilar): decide how to issue a command.
 	// TODO(jaguilar): ensure that the terminal didn't resume since the previous command.
-	if err := g.parse(); err != nil {
-		return err
-	}
+	g.lastMenu = screen.Screen(g.vt.Content).NextMenu(g.lastMenu)
 	return g.waitIdle()
 }
 

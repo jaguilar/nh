@@ -12,6 +12,14 @@ func TestFailedParses(t *testing.T) {
 	// match that captures the item type is very broad.
 }
 
+func mustParse(s string) *Item {
+	i, err := Parse(s)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+
 func TestParseBuc(t *testing.T) {
 	for _, tc := range []struct {
 		string
@@ -22,10 +30,7 @@ func TestParseBuc(t *testing.T) {
 		{"c - a blessed orcish dagger", Blessed},
 		{"d - an orcish dagger", BUCUnknown},
 	} {
-		i, err := Parse(tc.string)
-		if assert.Nil(t, err) {
-			assert.Equal(t, tc.BUC, i.BUC)
-		}
+		assert.Equal(t, tc.BUC, mustParse(tc.string).BUC)
 	}
 }
 
@@ -81,3 +86,19 @@ func TestParseFixedness(t *testing.T) {
 		}
 	}
 }
+
+func TestParseSlot(t *testing.T) {
+	assert.Equal(t, 'V', mustParse("V - a shortsword").InventoryLetter)
+}
+
+func TestNamed(t *testing.T) {
+	assert.Equal(t, "shoop da woop", mustParse("d - an elven dagger named shoop da woop").Named)
+}
+
+func TestCalled(t *testing.T) {
+	assert.Equal(t, "sickness", mustParse("e - a potion called sickness").Class.Called)
+}
+
+// TODO(jaguilar): gather a large corpus of items and verify that we can parse them
+// correctly. This will be especially important once we are interpreting and limiting the
+// item class.

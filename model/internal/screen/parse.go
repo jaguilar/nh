@@ -1,4 +1,4 @@
-package model
+package screen
 
 import (
 	"regexp"
@@ -33,7 +33,7 @@ const (
 )
 
 /*
-nextMenuContext gets the next menu context from the current one.
+NextMenu gets the next menu context from the current one.
 
 Let's look at the format of some nethack menus. We'll use the '·' symbol
 to indicate whitespace. The zeroth column of this file is also the zeroth
@@ -127,12 +127,12 @@ var (
 // In the long run, we should get to the point where we never return any
 // errors.
 func (s Screen) ParseItems() (items []*item.Item, errs []string) {
-	istrings := s.itemStrings()
+	/* istrings := s.itemStrings()
 
 	for _, s := range istrings {
 		i, err := item.Parse(s)
 
-	}
+	}*/
 
 	return
 }

@@ -14,7 +14,7 @@ func Parse(s string) (*Item, error) {
 		return nil, fmt.Errorf("mismatch vs item regexp: %s", s)
 	}
 
-	i := &Item{}
+	i := &Item{Class: &Class{}}
 	if t, ok := m["type"]; ok {
 		i.Class.Name = t
 	}
@@ -54,6 +54,10 @@ func Parse(s string) (*Item, error) {
 
 	if erosion, ok := m["erosions"]; ok {
 		i.Erosion = parseErosion(erosion)
+	}
+
+	if invLetter, ok := m["slot"]; ok {
+		i.InventoryLetter = []rune(invLetter)[0]
 	}
 
 	return i, nil
@@ -97,14 +101,14 @@ func matchMap(re *regexp.Regexp, s []string) map[string]string {
 // During the course of this regexp, we capture a little more than we need to in
 // some places.
 var (
-	slot         = "^(?P<slot>[a-zA-Z]) -"
-	ordinal      = " (?P<ordinal>" + alternates("an", "a", "the", "\\d{1,2}") + ")"
+	slot         = "^(?:(?P<slot>[a-zA-Z]) - )?"
+	ordinal      = "(?P<ordinal>" + alternates("an", "a", "the", "\\d{1,2}") + ")"
 	buc          = "(?: (?P<buc>" + alternates("blessed", "uncursed", "cursed") + "))?"
 	greased      = "(?: (?P<greased>greased))?"
 	erosionLevel = "(?: (?P<erosionlevel>" + alternates("thoroughly", "very") + "))?"
 
 	erosionType = "(?: (?P<erosiontype>" + alternates("rusty", "burnt", "corroded", "rotted") + "))"
-	oneErosion  = erosionLevel + "?" + erosionType
+	oneErosion  = erosionLevel + erosionType
 	erosion     = "(?P<erosions>(?:" + oneErosion + ")*)"
 
 	fixedness = "(?: (?P<fixedness>" + alternates(`\w*proof`, "fixed") + "))?"
