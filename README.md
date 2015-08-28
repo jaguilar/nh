@@ -1,5 +1,6 @@
 # Nethack
 
+* Test status: [![Build Status](https://travis-ci.org/jaguilar/nh.svg?branch=master)](https://travis-ci.org/jaguilar/nh)
 * State: Preproduction
 
 This is a hobby project to parse the state of the Nethack
