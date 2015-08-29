@@ -2,6 +2,16 @@ package item
 
 import "github.com/jaguilar/nh/model/randfunc"
 
+var (
+	// classes is a list of item classes in the game. Most items like weapons,
+	// armor, tools, etc. are in this list, although some are not. Notably,
+	// corpses and statues of any kind will not be found here.
+	//
+	// This is private to the package because users should use the Registry to
+	// get information about item classes.
+	classes = make(map[string]*Class)
+)
+
 // Class is the an Item's grouping. "elven dagger" is a class of items, of which
 // there may be a +1 cursed elven dagger, a blessed fixed elven dagger, etc.
 //

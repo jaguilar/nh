@@ -89,14 +89,7 @@ bullwhip,4,20,0.02,leather,,,d2,1,
 rubber hose,3,20,0,PLAS,,,d4,d3,
 unicorn horn,100,20,0,BONE,,1,d12,d12,`
 
-var (
-	// Weapons is a map of all the weapon names to their associated item Class.
-	Weapons map[string]*Class
-)
-
 func init() {
-	Weapons = make(map[string]*Class)
-
 	csvReader := csv.NewReader(strings.NewReader(data))
 	csvReader.Comment = '#'
 
@@ -120,9 +113,9 @@ func init() {
 			SmallDam:   randfunc.DiceMust(r[7]),
 			LargeDam:   randfunc.DiceMust(r[8]),
 		}
-		Weapons[c.Name] = c
+		classes[c.Name] = c
 		if alt != "" {
-			Weapons[alt] = c
+			classes[alt] = c
 		}
 	}
 }
