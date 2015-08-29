@@ -39,16 +39,8 @@ func TestDiceRequiresSides(t *testing.T) {
 	assert.NotNil(t, err)
 }
 
-func TestConst(t *testing.T) {
-	d := Constant(4)
-	min, max := d.Bound()
-	assert.Equal(t, 4, min)
-	assert.Equal(t, 4, max)
-	assert.Equal(t, 4, d.Do())
-}
-
 func TestSum(t *testing.T) {
-	s := Sum(Constant(2), DiceMust("d5"))
+	s := Sum(DiceMust("2"), DiceMust("d5"))
 	min, max := s.Bound()
 	assert.Equal(t, 3, min)
 	assert.Equal(t, 7, max)

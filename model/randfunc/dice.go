@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 // RFunc represents a general random calculation from the game. You can get the
@@ -17,7 +18,76 @@ type RFunc interface {
 	Do() int           // Do executes the random function once and returns the result.
 }
 
-var diceRe = regexp.MustCompile(`(\d*)d(\d+)`)
+var diceRe = regexp.MustCompile(`^(\d*?)(d)?(\d+)$`)
+
+// Dice converts a "dice expression" like "2d4 + 1", return an RFunc that models
+// those dice.
+//
+// The grammar is:
+//
+// DiceExpression       = Expression | Expression "+" DiceExpression .
+// Expression           = Dice | Constant .
+// Dice                 = [ int_lit ] "d" int_lit
+// Constant             = int_lit
+//
+// Any amount of white space between each expression is ignored. Whitespace
+// inside an expression is not allowed. For example:
+//
+// - "1d2   +1" -- ok
+// - "1d2+1"    -- ok
+// - "1 d2+1"   -- error
+//
+// Dice "xdy" means "roll a y sided die x times"
+func Dice(s string) (RFunc, error) {
+	parts := strings.Split(s, "+")
+	var expressions []RFunc
+
+	for _, p := range parts {
+		match := diceRe.FindStringSubmatch(p)
+		if match == nil {
+			return nil, fmt.Errorf("can't parse as dice expression: %s", s)
+		}
+
+		isDice := match[2] != ""
+
+		if isDice {
+			if match[3] == "" {
+				return nil, fmt.Errorf("each dice must have a sides count: %s", s)
+			}
+
+			d := dice{n: 1}
+			var err error
+			if match[1] != "" {
+				d.n, err = strconv.Atoi(match[1])
+				if err != nil {
+					return nil, err
+				}
+			}
+			d.sides, err = strconv.Atoi(match[3])
+			if err != nil {
+				return nil, err
+			}
+			expressions = append(expressions, RFunc(d))
+		} else { // Constant expression.
+			c, err := strconv.Atoi(match[3])
+			if err != nil {
+				return nil, err
+			}
+			expressions = append(expressions, RFunc(constant(c)))
+		}
+	}
+
+	return joined(expressions), nil
+}
+
+// DiceMust is like Dice, but panics if there is an error.
+func DiceMust(s string) RFunc {
+	d, err := Dice(s)
+	if err != nil {
+		panic(err)
+	}
+	return d
+}
 
 type dice struct {
 	n, sides int
@@ -34,52 +104,10 @@ func (d dice) Do() int {
 	return o
 }
 
-// Dice converts a "dice expression" like "2d4", return an RFunc that models
-// those dice. Each expression must match `\d*d\d+`. That is: any number of
-// digits, including zero, followed by the character 'd', followed by at least
-// one digit. In practice, if you make these numbers too large, you will have
-// overflow problems.
-//
-// If you have more than
-func Dice(s string) (RFunc, error) {
-	match := diceRe.FindStringSubmatch(s)
-	if match == nil {
-		return nil, fmt.Errorf("can't parse as dice expression: %s", s)
-	}
-
-	d := dice{n: 1}
-	var err error
-	if match[1] != "" {
-		d.n, err = strconv.Atoi(match[1])
-	}
-	if err != nil {
-		panic(err) // Can't happen: the regexp ensures that we only get ints.
-	}
-	d.sides, err = strconv.Atoi(match[2])
-	if err != nil {
-		panic(err) // Can't happen: same reason.
-	}
-	return d, err
-}
-
-// DiceMust is like Dice, but panics if there is an error.
-func DiceMust(s string) RFunc {
-	d, err := Dice(s)
-	if err != nil {
-		panic(err)
-	}
-	return d
-}
-
 type constant int
 
 func (c constant) Bound() (int, int) { return int(c), int(c) }
 func (c constant) Do() int           { return int(c) }
-
-// Constant returns an RFunc that models a constant number.
-func Constant(i int) RFunc {
-	return constant(i)
-}
 
 type joined []RFunc
 

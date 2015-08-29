@@ -4,17 +4,20 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/kr/pretty"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestWeaponSanity(t *testing.T) {
+	pretty.Println(Weapons)
+
 	// Just a quick sanity check for weapons. Make sure that each weapon has
 	// the right category. At least some should have a hit bonus. All should
 	// have damage funcs.
 	var hit, appearance int
 	for _, w := range Weapons {
 		assert.NotEqual(t, "", w.Name)
-		assert.NotEqual(t, 0, w.Price)
+		assert.NotEqual(t, 0, w.Price, fmt.Sprint(w))
 		assert.Equal(t, Weapon, w.Category, fmt.Sprint(w))
 		if w.HitBonus != 0 {
 			hit++
