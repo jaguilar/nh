@@ -29,10 +29,6 @@ type Item struct {
 	InventoryLetter rune
 
 	Charge
-
-	// The price of an item, if we have price-id'd it.
-	// Zeroed for items of a known type, or if we have not yet price id'd the item.
-	Price int
 }
 
 // BUC is the blessed, cursed, or uncursed status of an item.

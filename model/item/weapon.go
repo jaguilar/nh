@@ -106,7 +106,6 @@ func init() {
 			Name:       name,
 			Price:      mustInt(r[1]),
 			Weight:     mustInt(r[2]),
-			GenProb:    mustFloat(r[3]),
 			Material:   Material(r[4]),
 			Appearance: r[5],
 			HitBonus:   mustInt(r[6]),
@@ -143,12 +142,4 @@ func mustInt(s string) int {
 		panic(err)
 	}
 	return i
-}
-
-func mustFloat(s string) float64 {
-	f, err := strconv.ParseFloat(s, 64)
-	if err != nil {
-		panic(err)
-	}
-	return f
 }

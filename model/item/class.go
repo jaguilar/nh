@@ -36,9 +36,6 @@ type Class struct {
 	// Weight is the weight of the item.
 	Weight int
 
-	// GenProb is the probability that the item will be generated randomly.
-	GenProb float64
-
 	Material
 
 	// If this is a weapon, these will be set.
@@ -47,6 +44,13 @@ type Class struct {
 
 	// TODO(jaguilar): items should have effects listed for apply, zap, hit, quaff, etc.
 	// (Maybe!?)
+
+	// For comestibles, always true. For other items, true if, when ingested
+	// by a form that can eat this material (mostly: metallivores for metal),
+	// this item confers some beneficial effect.
+	//
+	// To be more blunt: eating this amulet might do something good only if this is true.
+	Edible bool
 }
 
 // Category is the category of an item.
