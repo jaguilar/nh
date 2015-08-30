@@ -1,18 +1,20 @@
 package item
 
 import (
-	"encoding/csv"
 	"fmt"
+	"io"
 	"regexp"
 	"strconv"
-	"strings"
 
+	"github.com/jaguilar/nh/model/anatomy"
 	"github.com/jaguilar/nh/model/randfunc"
 )
 
-var data = `# Original source: http://www.steelypips.org/nethack/343/tabs-343.html
+func init() {
+	data := `# Original source: http://www.steelypips.org/nethack/343/tabs-343.html
 # Formatted source: https://docs.google.com/spreadsheets/d/1dbr9QTf0JBFYXpFq-2_ODwLqflQXDy15cPcqBEoT9cw/pubhtml
-# Name,Price,Weight,Prob,Pct,Material,Appearance,HitBonus,Small Damage,Large Damage,2h
+# Note: probability in this data is out of line with the other data. It should be regenerated.
+name,price,weight,probability,material,appearance,hitBonus,smallDamage,largeDamage,2h
 orcish dagger,4,10,0.12,iron,crude dagger,2,d3,d3,
 dagger,4,10,0.3,iron,,2,d4,d3,
 silver dagger,40,12,0.03,silver,,2,d4,d3,
@@ -88,34 +90,37 @@ boomerang,20,5,0.15,wood,,,d9,d9,
 bullwhip,4,20,0.02,leather,,,d2,1,
 rubber hose,3,20,0,PLAS,,,d4,d3,
 unicorn horn,100,20,0,BONE,,1,d12,d12,`
+	csv := mustMapCsv(data)
 
-func init() {
-	csvReader := csv.NewReader(strings.NewReader(data))
-	csvReader.Comment = '#'
+	for csv.next() {
+		name, alt := parseAltName(csv.get("name"))
 
-	records, err := csvReader.ReadAll()
-	if err != nil {
-		panic(err)
-	}
-
-	for _, r := range records {
-		name, alt := parseAltName(r[0])
+		var slots []anatomy.BodyPart
+		if csv.get("2h") == "" {
+			slots = []anatomy.BodyPart{anatomy.Hand}
+		} else {
+			slots = []anatomy.BodyPart{anatomy.Hand, anatomy.Hand}
+		}
 
 		c := &Class{
 			Category:   Weapon,
 			Name:       name,
-			Price:      mustInt(r[1]),
-			Weight:     mustInt(r[2]),
-			Material:   Material(r[4]),
-			Appearance: r[5],
-			HitBonus:   mustInt(r[6]),
-			SmallDam:   randfunc.DiceMust(r[7]),
-			LargeDam:   randfunc.DiceMust(r[8]),
+			Price:      mustInt(csv.get("price")),
+			Weight:     mustInt(csv.get("weight")),
+			Material:   Material(csv.get("material")),
+			Appearance: csv.get("appearance"),
+			HitBonus:   mustInt(csv.get("hitBonus")),
+			SmallDam:   randfunc.DiceMust(csv.get("smallDamage")),
+			LargeDam:   randfunc.DiceMust(csv.get("largeDamage")),
+			Slots:      slots,
 		}
 		classes[c.Name] = c
 		if alt != "" {
 			classes[alt] = c
 		}
+	}
+	if csv.err != io.EOF {
+		panic(csv.err)
 	}
 }
 

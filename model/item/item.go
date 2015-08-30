@@ -11,11 +11,14 @@ type Item struct {
 	Enhancement
 	Erosion
 
-	// Has the item been Fixed? (Is it rustproof, fireproof, etc.?)
+	// Fixed - has the item been fixed (rust/burn/corrode/rot-proofed?).
 	Fixed bool
 
-	// The shared item class for this object.
-	*Class
+	// Greased - is the item greased?
+	Greased bool
+
+	// Class - item class for this object.
+	Class *Class
 
 	// Named is what we've named this individual stack of items, if we've named this individual stack
 	// something.
@@ -29,9 +32,92 @@ type Item struct {
 	InventoryLetter rune
 
 	Charge
+
+	// The size of the stack of this item we have.
+	Stack int
+}
+
+// String is part of the Stringer interface.
+//
+// At the moment, we're not going to attempt to reach parity with Nethack's
+// printing of item names. Particularly, we're not bothering with the initial
+// article.
+func (i *Item) String() string {
+	var parts []string
+	writef := func(format string, args ...interface{}) {
+		s := fmt.Sprintf(format, args...)
+		if s != "" {
+			parts = append(parts, s)
+		}
+	}
+
+	if i.InventoryLetter != 0 {
+		writef("%c -", i.InventoryLetter)
+	}
+
+	if i.Stack > 1 {
+		writef("%d", i.Stack)
+	}
+
+	if i.BUC != BUCUnknown {
+		// Note: the model will print out its knowledge of the non-cursed state,
+		// even if nethack doesn't display that knowledge.
+		writef("%s", strings.ToLower(i.BUC.String()))
+	}
+
+	if i.Greased {
+		writef("greased")
+	}
+
+	writef("%s", i.Erosion.String())
+
+	if i.Fixed {
+		writef("%s", i.Class.Material.FixedString())
+	}
+
+	if i.Enhancement.Known {
+		writef("%s", i.Enhancement.String())
+	}
+
+	if !i.Artifact() {
+		switch {
+		case i.Class.Name != "":
+			// Case 1: it's identified. We print neither its appearance or its non-unique name.
+			writef("%s", i.Class.Name)
+		case i.Class.Called != "":
+			// Case 2: it's called something. Don't print its appearance.
+			writef("%s called %s", strings.ToLower(i.Class.Category.String()), i.Class.Called)
+		default:
+			// Case 3: if it's unidentified and uncalled, we print the appearance.
+			writef("%s %s", i.Class.Appearance, i.Class.Category)
+		}
+
+		// Whether identified, called, or uncalled, we print the named claused after.
+		if i.Named != "" {
+			writef("named %s", i.Class.Name)
+		}
+	} else {
+		// Identified artifacts are simply printed by their name. They can neither
+		// be called nor renamed (at least not in a way that's visible in the UI).
+		writef("%s", i.Named)
+	}
+
+	// Finally, the charge data, if any.
+	if i.Charge.Max != 0 {
+		writef("%s", i.Charge.String())
+	}
+
+	return strings.Join(parts, " ")
+}
+
+// Artifact returns whether item is an artifact. That is, are its name and class the same
+// as that of an artifact?
+func (i *Item) Artifact() bool {
+	return artifacts[artifactKey{name: i.Named, class: i.Class.Name}]
 }
 
 // BUC is the blessed, cursed, or uncursed status of an item.
+// +gen stringer
 type BUC int
 
 // The various BUC statuses. Blessed, Cursed, and Uncursed are all in-game
@@ -60,8 +146,7 @@ func (e Erosion) String() string {
 		return t
 	}
 
-	// Corrosion needs to be displayed before rust. Other than iron, items cannot
-	// have multiple erosions so there is no need to control for the display ordering.
+	// Corrosion needs to be displayed before rust. Burnt before rotted.
 	if e.Rusty != Uneroded {
 		parts = append(parts, withPrefix(e.Rusty, "rusty"))
 	}
@@ -107,7 +192,17 @@ func (e ErosionLevel) Prefix() string {
 }
 
 // Enhancement represents the enhancement level of an item.
-type Enhancement int
+type Enhancement struct {
+	Known bool
+	int
+}
+
+func (e Enhancement) String() string {
+	if !e.Known {
+		return ""
+	}
+	return fmt.Sprintf("%+d", e.int)
+}
 
 // Charge tells the charge state of an item. If the item is of a type that is
 // not chargeable, or if the charge is not known, Known will be set to false.

@@ -31,6 +31,13 @@ func Parse(s string) (*Item, error) {
 		i.BUC = parseBUC(bucStr)
 	}
 
+	if enhStr, ok := m["enh"]; ok {
+		i.Enhancement.Known = true
+		if _, err := fmt.Sscanf(enhStr, "%d", &i.Enhancement.int); err != nil {
+			return nil, fmt.Errorf("error parsing enhancement \"%s\": %v", enhStr, err)
+		}
+	}
+
 	if charge, ok := m["charge"]; ok {
 		maxCharge, ok := m["maxcharge"]
 		if !ok {
@@ -112,14 +119,14 @@ var (
 	erosion     = "(?P<erosions>(?:" + oneErosion + ")*)"
 
 	fixedness = "(?: (?P<fixedness>" + alternates(`\w*proof`, "fixed") + "))?"
-	ench      = `(?: (?P<ench>(?:\+|-)\d{1,3}))?`
+	enh       = `(?: (?P<enh>(?:\+|-)\d{1,3}))?`
 	itype     = `(?: (?P<type>.+?))`
 	called    = `(?: called (?P<called>.+?))?`
 	named     = `(?: named (?P<named>.+?))?`
 	charge    = `(?: \((?P<charge>\d{1,3}):(?P<maxcharge>\d{1,3})\))?$`
 
 	itemRe = regexp.MustCompile(
-		slot + ordinal + buc + greased + erosion + fixedness + ench + itype + called + named + charge)
+		slot + ordinal + buc + greased + erosion + fixedness + enh + itype + called + named + charge)
 
 	erosionRe = regexp.MustCompile(oneErosion)
 )

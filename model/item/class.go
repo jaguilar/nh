@@ -1,6 +1,9 @@
 package item
 
-import "github.com/jaguilar/nh/model/randfunc"
+import (
+	"github.com/jaguilar/nh/model/anatomy"
+	"github.com/jaguilar/nh/model/randfunc"
+)
 
 var (
 	// classes is a list of item classes in the game. Most items like weapons,
@@ -38,22 +41,38 @@ type Class struct {
 
 	Material
 
-	// If this is a weapon, these will be set.
-	HitBonus           int
+	// HitBonus is the extra to-hit conferred by this, if this is wielded as a weapon.
+	HitBonus int
+
+	// SmallDam and LargeDam are the randfuncs that define the damage against small and
+	// large monsters when this weapon is wielded against that monster.
 	SmallDam, LargeDam randfunc.RFunc
+
+	// AC is the basic amount of AC LOST when wearing an item. In other words, an
+	// item with AC 1 *reduces* your AC by 1 when worn.
+	AC int
 
 	// TODO(jaguilar): items should have effects listed for apply, zap, hit, quaff, etc.
 	// (Maybe!?)
 
-	// For comestibles, always true. For other items, true if, when ingested
+	// Edible: for comestibles, always true. For other items, true if, when ingested
 	// by a form that can eat this material (mostly: metallivores for metal),
 	// this item confers some beneficial effect.
 	//
 	// To be more blunt: eating this amulet might do something good only if this is true.
 	Edible bool
+
+	// Slots is the slice of BodyParts required to use and taken up by this item.
+	// Items that use Hand parts need to be wielded. All others need to be Worn.
+	Slots []anatomy.BodyPart
+
+	// MagicCancellation is the degree of magic cancellation conferred by wearing
+	// this item.
+	MagicCancellation int
 }
 
 // Category is the category of an item.
+// +gen stringer
 type Category rune
 
 // The various item categories.
@@ -83,10 +102,51 @@ type Material string
 // Various materials. Might not include all materials in the game.
 const (
 	Iron    Material = "iron"
-	Copper  Material = "copper"
-	Metal   Material = "metal"
+	Copper  Material = "copper" // Or bronze.
+	Metal   Material = "metal"  // Generic metal, not iron, silver, copper or mithril.
 	Wood    Material = "wood"
 	Leather Material = "leather"
 	Cloth   Material = "cloth"
 	Plastic Material = "plastic"
+	Glass   Material = "glass"
+	Mithril Material = "mithril"
+	Mineral Material = "mineral"
+	Silver  Material = "silver"
+	Dragon  Material = "dragon"
 )
+
+// FixedString is the string that would describe an object's fixedness
+// were an object made up of this Material.
+func (m Material) FixedString() string {
+	switch m {
+	// Crysknives.
+	case Mineral:
+		return "fixed"
+	case Iron:
+		return "rustproof"
+	case Copper:
+		return "corrodeproof"
+	case Wood, Leather, Cloth:
+		return "fireproof"
+		// Nothing is labeled as rotproof.
+	default:
+		// Items matching this cannot be eroded. This includes "metal" like scalpels
+		// and tsurugis. It also includes dragon, glass, mithril, silver, etc.
+		return ""
+	}
+}
+
+// HindersSpellcasting returns whether wearing a given piece of equipment will
+// hinder spellcasting. Only wearing armor hinders spellcasting.
+func HindersSpellcasting(c *Class) bool {
+	if c.Category != Armor {
+		return false
+	}
+
+	switch c.Material {
+	case Iron, Copper, Mithril, Silver:
+		return true
+	default:
+		return false
+	}
+}
