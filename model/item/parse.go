@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
 // Parse parses an item string and returns an appropriate *Item for that string.
@@ -33,7 +32,7 @@ func Parse(s string) (*Item, error) {
 
 	if enhStr, ok := m["enh"]; ok {
 		i.Enhancement.Known = true
-		if _, err := fmt.Sscanf(enhStr, "%d", &i.Enhancement.int); err != nil {
+		if _, err := fmt.Sscanf(enhStr, "%d", &i.Enhancement.Value); err != nil {
 			return nil, fmt.Errorf("error parsing enhancement \"%s\": %v", enhStr, err)
 		}
 	}
@@ -70,16 +69,6 @@ func Parse(s string) (*Item, error) {
 	return i, nil
 }
 
-// alternates returns a wrapped, uncaptured regexp that matches any one of a
-// group of alternate regular expressions.
-func alternates(inRe ...string) string {
-	var anon []string
-	for _, s := range inRe {
-		anon = append(anon, "(?:"+s+")")
-	}
-	return "(?:" + strings.Join(anon, "|") + ")"
-}
-
 // matchMap returns a map of each subexpression name to its match, if any.
 // A nil return value indicates no match.
 func matchMap(re *regexp.Regexp, s []string) map[string]string {
@@ -108,27 +97,42 @@ func matchMap(re *regexp.Regexp, s []string) map[string]string {
 // During the course of this regexp, we capture a little more than we need to in
 // some places.
 var (
-	slot         = "^(?:(?P<slot>[a-zA-Z]) - )?"
-	ordinal      = "(?P<ordinal>" + alternates("an", "a", "the", "\\d{1,2}") + ")"
-	buc          = "(?: (?P<buc>" + alternates("blessed", "uncursed", "cursed") + "))?"
-	greased      = "(?: (?P<greased>greased))?"
-	erosionLevel = "(?: (?P<erosionlevel>" + alternates("thoroughly", "very") + "))?"
+	slot = "^(?:(?P<slot>[a-zA-Z]) -)?"
+	// Ordinal is optional so as to support re-parsing.
+	ordinal = `\W?(?P<ordinal>an|a|the|\d{1,2})?`
+	buc     = `\W?(?P<buc>blessed|uncursed|cursed)?`
+	greased = `\W?(?P<greased>greased)?`
+	erosion = `\W?(?P<erosion>(?P<elevel>thoroughly|very)?\W?(?P<etype>rusty|burnt|corroded|rotted))`
 
-	erosionType = "(?: (?P<erosiontype>" + alternates("rusty", "burnt", "corroded", "rotted") + "))"
-	oneErosion  = erosionLevel + erosionType
-	erosion     = "(?P<erosions>(?:" + oneErosion + ")*)"
+	// Once we have the erosions string, we'll have to search it with the erosion regexp to parse
+	// out each individual erosion.
+	erosions = `(?P<erosions>(?:` + erosion + `)*)`
 
-	fixedness = "(?: (?P<fixedness>" + alternates(`\w*proof`, "fixed") + "))?"
-	enh       = `(?: (?P<enh>(?:\+|-)\d{1,3}))?`
-	itype     = `(?: (?P<type>.+?))`
-	called    = `(?: called (?P<called>.+?))?`
-	named     = `(?: named (?P<named>.+?))?`
-	charge    = `(?: \((?P<charge>\d{1,3}):(?P<maxcharge>\d{1,3})\))?$`
+	fixedness = `\W?(?P<fixedness>(?:\w*proof)|fixed)?`
+	enh       = `\W?(?P<enh>(?:\+|-)\d)?`
+	itype     = `\W?(?P<type>[a-zA-Z ]+?)`
+	called    = `(?:\W?called (?P<called>.+?))?`
+	named     = `(?:\W?named (?P<named>.+?))?`
+	// Match charge info.
+	charge = `\W?(?:\((?P<charge>\d{1,3}):(?P<maxcharge>\d{1,3})\))?`
+	// Match any non-charge property. Currently ignored. This will match things
+	// like the candelabrum of invocation's extra information.
+	otherParenProperty = `\W?(?P<paren>(?:\W?\([^)]*\)*?))?$`
+
+	/*
+	   Note: we don't take whether the item is being worn into account here.
+	   That is information about the item's location in the world, which is not part of
+	   parsing the item.
+	   	worn = `(?: \((?P<worn>` + alternates(
+	   		"being worn", "weapon in \\w*", "in quiver",
+	   		"alternate weapon; not wielded", "wielded in other \\w*",
+	   		"on \\w* \\w*") + `)\))?`
+	*/
 
 	itemRe = regexp.MustCompile(
-		slot + ordinal + buc + greased + erosion + fixedness + enh + itype + called + named + charge)
+		slot + ordinal + buc + greased + erosions + fixedness + enh + itype + called + named + charge + otherParenProperty)
 
-	erosionRe = regexp.MustCompile(oneErosion)
+	erosionRe = regexp.MustCompile(erosion)
 )
 
 // ParseBUC parses a BUC string from nethack. This cannot return Noncursed,
@@ -156,8 +160,8 @@ func parseErosion(s string) Erosion {
 
 	for _, match := range matches {
 		m := matchMap(erosionRe, match)
-		l := parseErosionLevel(m["erosionlevel"])
-		switch m["erosiontype"] {
+		l := parseErosionLevel(m["elevel"])
+		switch m["etype"] {
 		case "corroded":
 			e.Corroded = l
 		case "rusty":

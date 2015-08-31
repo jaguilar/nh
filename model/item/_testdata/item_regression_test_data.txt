@@ -1,0 +1,574 @@
+R - an uncursed amulet of life saving (being worn)
+a - the blessed rustproof +7 Stormbringer (weapon in hand)
+Y - a blessed +6 silver saber (wielded in other hand)
+e - an uncursed +5 silver dragon scale mail (being worn)
+f - an uncursed fireproof +5 pair of speed boots (being worn)
+n - an uncursed greased rustproof +5 helm of brilliance (being worn)
+T - a blessed fireproof +5 cloak of magic resistance (being worn)
+V - an uncursed +5 T-shirt (being worn)
+Z - a blessed fireproof +5 pair of gauntlets of dexterity (being worn)
+j - the uncursed Book of the Dead
+I - 2 potions of holy water
+r - an uncursed ring of conflict
+A - an uncursed +4 ring of increase accuracy
+D - a blessed +7 ring of increase damage (on right hand)
+K - an uncursed ring of regeneration (on left hand)
+t - a wand of teleportation (4:8)
+y - a wand of death (1:6)
+z - a cursed wand of fire (1:9)
+C - a wand of death (1:3)
+M - a cursed wand of death (2:5)
+S - a wand of death (0:4)
+b - an uncursed blindfold
+d - the blessed Master Key of Thievery
+g - an uncursed magic lamp (lit)
+h - a +0 unicorn horn
+p - a blessed bag of holding
+s - the uncursed Candelabrum of Invocation (no candles attached)
+u - a blessed bag of holding
+G - the Bell of Opening (0:2)
+X - an uncursed oilskin sack named XCL
+B - the uncursed Heart of Ahriman
+115772 gold pieces
+an uncursed amulet of reflection
+an uncursed amulet of life saving
+an uncursed amulet of life saving
+an uncursed amulet of life saving
+the blessed rustproof +1 Sunsword
+the rustproof +0 Magicbane
+the fireproof +0 Orcrist
+the +0 Giantslayer
+the +0 Snickersnee
+the rustproof +0 Trollsbane
+the blessed rustproof +7 Cleaver
+the rustproof +5 Demonbane
+the blessed rustproof +7 Frost Brand
+the blessed rustproof +1 Dragonbane
+the +0 Werebane
+the +7 Sting
+the blessed rustproof +0 Ogresmasher
+a blessed +4 gray dragon scale mail
+3 uncursed lembas wafers
+an uncursed scroll of taming
+5 uncursed scrolls of identify
+5 uncursed scrolls of blank paper
+4 uncursed scrolls of gold detection
+3 blessed scrolls of blank paper
+4 blessed scrolls of identify
+a blessed spellbook of identify
+an uncursed potion of invisibility
+a blessed potion of levitation
+3 uncursed potions of full healing
+an uncursed potion of extra healing
+2 blessed potions of extra healing
+3 potions of holy water
+a wand of teleportation (0:7)
+a blessed wand of polymorph (0:0)
+a wand of cold (0:8)
+a wand of death (3:2)
+a magic marker (0:84)
+14 uncursed citrine stones
+24 uncursed jade stones
+27 uncursed black opals
+5 uncursed topaz stones
+26 uncursed emeralds
+2 uncursed luckstones
+46 uncursed amber stones
+9 uncursed opals
+13 uncursed rubies
+18 uncursed jacinth stones
+10 uncursed fluorite stones
+29 uncursed chrysoberyl stones
+34 uncursed obsidian stones
+6 uncursed garnet stones
+43 uncursed amethyst stones
+16 uncursed diamonds
+12 uncursed jasper stones
+54 uncursed sapphires
+27 uncursed aquamarine stones
+13 uncursed turquoise stones
+20 uncursed agate stones
+7 uncursed dilithium crystals
+8 uncursed jet stones
+an uncursed amulet of life saving
+an uncursed amulet of reflection
+an uncursed amulet of magical breathing
+an uncursed amulet of life saving
+5 +7 elven daggers
+an uncursed fireproof +5 robe
+an uncursed +0 helm of opposite alignment
+an uncursed cockatrice egg
+an uncursed lembas wafer
+2 uncursed cockatrice eggs
+5 uncursed scrolls of remove curse
+a blessed scroll of genocide
+5 blessed scrolls of identify
+2 uncursed scrolls of genocide
+4 blessed scrolls of remove curse
+an uncursed potion of full healing
+2 uncursed potions of extra healing
+a potion of unholy water
+a blessed potion of extra healing
+3 potions of holy water
+a blessed ring of levitation
+an uncursed ring of searching
+an uncursed ring of slow digestion
+a wand of lightning (0:4)
+a wand of teleportation (0:5)
+a wand of teleportation (0:5)
+a wand of lightning (0:7)
+a wand of cold (0:8)
+a wand of cold (0:8)
+a wand of teleportation (0:8)
+a wand of teleportation (1:8)
+a wand of teleportation (0:8)
+a blessed magic whistle
+an uncursed stethoscope
+an uncursed leash
+an uncursed skeleton key
+a blessed magic lamp
+a can of grease (0:8)
+3 uncursed obsidian stones
+4 uncursed jacinth stones
+4 uncursed rubies
+3 uncursed amethyst stones
+a wand of cancellation (0:7)
+Amulets
+g - a blessed amulet of life saving (being worn)
+Weapons
+b - the blessed rustproof +7 Fire Brand
+J - the blessed rustproof +7 Magicbane (weapon in hand)
+h - a blessed +7 silver saber (wielded in other hand)
+Armor
+U - a blessed fireproof +5 Hawaiian shirt (being worn)
+C - a blessed greased rustproof +5 helm of brilliance (being worn)
+x - a blessed fireproof +5 pair of gauntlets of dexterity (being worn)
+S - a blessed fireproof +5 pair of speed boots (being worn)
+v - a blessed greased fireproof +5 robe (being worn)
+F - a blessed +5 silver dragon scale mail (being worn)
+Comestibles
+q - 8 blessed cockatrice eggs
+m - an uncursed lizard corpse
+E - an uncursed sprig of wolfsbane
+Scrolls
+B - 2 blessed scrolls of genocide
+Spellbooks
+l - the blessed Book of the Dead
+Rings
+Q - a blessed rusty ring of conflict
+t - a blessed ring of free action (on left hand)
+f - a blessed ring of invisibility
+A - a blessed ring of levitation
+d - a blessed ring of protection from shape changers
+P - a blessed ring of slow digestion (on right hand)
+Wands
+H - a fireproof wand of death (0:5)
+I - a wand of death (0:7)
+M - a wand of death (0:6)
+N - a blessed wand of lightning (0:3)
+G - a wand of secret door detection (0:4)
+r - a blessed thoroughly corroded wand of teleportation (3:8)
+Tools
+n - a blessed greased fireproof bag of holding
+y - the Bell of Opening (3:2)
+Y - the uncursed Candelabrum of Invocation (no candles attached)
+z - a blessed magic whistle
+o - an uncursed oilskin sack
+X - a blessed pair of lenses (being worn)
+O - the blessed Platinum Yendorian Express Card
+k - a blessed skeleton key
+c - a blessed stethoscope
+w - a blessed towel
+e - a blessed +0 unicorn horn
+Gems
+p - a blessed luckstone named WP47
+a blessed amulet of life saving
+an uncursed amulet of reflection
+the blessed rustproof +3 Demonbane
+the rustproof +0 Dragonbane
+the blessed rustproof +7 Frost Brand
+the +0 Grimtooth
+the rustproof +0 Mjollnir
+the blessed rustproof +0 Sunsword
+the blessed rustproof +1 Trollsbane
+the blessed rustproof +7 Vorpal Blade
+the +6 Werebane
+a blessed fireproof +5 cloak of magic resistance
+a blessed fireproof +5 oilskin cloak
+a blessed fireproof +0 pair of leather gloves
+a blessed fireproof +2 pair of levitation boots
+a blessed fireproof +4 pair of water walking boots
+an uncursed lizard corpse
+122 blessed scrolls of charging
+50 uncursed scrolls of create monster
+75 blessed scrolls of genocide
+9 uncursed scrolls of gold detection
+an uncursed +2 ring of adornment
+an uncursed ring of conflict
+an uncursed ring of free action
+an uncursed ring of hunger
+an uncursed ring of levitation
+an uncursed ring of polymorph
+an uncursed ring of polymorph control
+an uncursed ring of protection from shape changers
+an uncursed ring of slow digestion
+an uncursed ring of teleport control
+a wand of cold (0:7)
+a blessed wand of death (0:0)
+a wand of enlightenment (0:11)
+a wand of fire (1:7)
+a wand of fire (0:5)
+a blessed wand of lightning (3:1)
+a wand of lightning (0:4)
+a wand of nothing (0:6)
+a wand of sleep (0:7)
+a wand of speed monster (0:5)
+a wand of teleportation (2:2)
+a wand of teleportation (1:1)
+a wand of undead turning (0:1)
+a wand of wishing (0:3)
+a can of grease (0:12)
+an uncursed leash
+a blessed magic lamp
+a blessed magic lamp
+a blessed magic lamp
+a blessed magic lamp
+a blessed magic lamp
+a blessed magic marker (1:86)
+a magic marker (1:99)
+a magic marker (1:93)
+a magic marker (0:92)
+a magic marker (0:92)
+a magic marker (1:88)
+a magic marker (1:88)
+a magic marker (1:87)
+a magic marker (0:87)
+a magic marker (1:81)
+a magic marker (0:78)
+a magic marker (1:78)
+a magic marker (0:78)
+a magic marker (1:74)
+a magic marker (0:73)
+a magic marker (1:71)
+a magic marker (0:71)
+a magic marker (1:71)
+a magic marker (1:69)
+a magic marker (1:67)
+a magic marker (1:63)
+a magic marker (0:59)
+a magic marker (1:54)
+a magic marker (1:52)
+a magic marker (1:47)
+a magic marker (1:41)
+a magic marker (1:35)
+a magic marker (1:35)
+a magic marker (0:35)
+a magic marker (1:35)
+an uncursed tin whistle
+a blessed +0 unicorn horn
+6 uncursed agate stones
+an uncursed amber stone
+4 uncursed amethyst stones
+5 uncursed aquamarine stones
+an uncursed black opal
+6 uncursed chrysoberyl stones
+3 uncursed citrine stones
+176 uncursed diamonds
+158 uncursed dilithium crystals
+6 uncursed emeralds
+an uncursed fluorite stone
+5 uncursed garnet stones
+204 uncursed jacinth stones
+3 uncursed jade stones
+an uncursed jasper stone
+3 uncursed jet stones
+a blessed luckstone
+2 uncursed luckstones
+a blessed touchstone
+a - a blessed +2 quarterstaff (weapon in hands)
+p - a +0 orcish dagger named not cursed
+C - a blessed +1 silver saber
+b - a blessed +3 cloak of magic resistance (being worn)
+q - a blessed +1 orcish helm (being worn)
+j - 2 uncursed tripe rations
+u - an uncursed food ration
+E - an uncursed cream pie
+I - an uncursed food ration
+i - an uncursed scroll of remove curse
+k - 2 uncursed scrolls of identify
+y - an uncursed scroll of identify
+D - an uncursed scroll of taming
+F - 2 uncursed scrolls of create monster
+G - an uncursed scroll of magic mapping
+H - a cursed scroll of identify
+l - a blessed spellbook of force bolt
+m - an uncursed spellbook of charm monster
+f - an uncursed potion of healing
+g - a blessed potion of restore ability
+h - an uncursed potion of oil
+t - an uncursed potion of speed
+w - an uncursed potion of fruit juice
+A - an uncursed potion of water
+d - an uncursed ring of stealth (on right hand)
+e - an uncursed ring of conflict (on left hand)
+r - an uncursed ring of fire resistance
+c - a wand of slow monster (0:8)
+J - a wand of create monster (0:14)
+n - a magic marker (0:41)
+B - a cursed oil lamp
+s - an uncursed worthless piece of yellow glass
+x - 2 uncursed worthless pieces of green glass
+z - 2 uncursed worthless pieces of yellowish brown glass
+K - an uncursed worthless piece of violet glass
+n - a blessed amulet of life saving (being worn)
+w - the blessed rustproof +7 Vorpal Blade (weapon in hand)
+x - the blessed +0 Longbow of Diana
+b - a blessed +5 gray dragon scale mail (being worn)
+f - a blessed fireproof +5 robe (being worn)
+j - a blessed +5 Hawaiian shirt (being worn)
+m - a blessed fireproof +7 elven leather helm (being worn)
+r - a blessed +5 shield of reflection (being worn)
+B - a blessed fireproof +5 pair of gauntlets of dexterity (being worn)
+P - a blessed fireproof +5 pair of speed boots (being worn)
+t - 2 uncursed K-rations
+K - an uncursed tripe ration
+Z - an uncursed lizard corpse
+I - the blessed Book of the Dead
+C - a blessed ring of conflict
+D - a blessed +6 ring of increase damage (on left hand)
+F - a blessed ring of free action
+L - a blessed ring of levitation
+S - a blessed ring of slow digestion
+X - a blessed +5 ring of increase damage (on right hand)
+d - a wand of digging (0:2)
+v - a blessed wand of death (0:1)
+y - a wand of teleportation (0:7)
+A - a wand of cancellation (1:4)
+G - a wand of cold (0:6)
+J - a wand of speed monster (0:2)
+M - a wand of lightning (0:3)
+N - a blessed wand of teleportation (0:5)
+Q - a wand of fire (1:10)
+W - a wand of sleep (0:4)
+k - a blessed skeleton key
+l - a blessed magic lamp (lit)
+q - a blessed greased bag of holding
+s - a blessed stethoscope
+u - a blessed +0 unicorn horn
+z - a blessed magic whistle
+H - the blessed Candelabrum of Invocation (7 candles attached)
+R - a blessed towel
+U - the blessed Bell of Opening (0:1)
+O - a blessed luckstone
+5326 gold pieces
+an uncursed amulet of life saving
+an uncursed amulet of life saving
+a blessed amulet of life saving
+35 blessed poisoned rustproof +7 crossbow bolts
+a blessed +7 crossbow
+the rustproof +0 Giantslayer
+a blessed fireproof +4 elven dagger
+an uncursed +0 pair of water walking boots
+an uncursed +0 mummy wrapping
+a blessed tin of nurse meat
+4 uncursed lembas wafers
+an uncursed lizard corpse
+2 uncursed pancakes
+2 uncursed slime molds
+a blessed scroll of taming
+a blessed scroll of remove curse
+an uncursed scroll of earth
+4 blessed scrolls of blank paper
+3 cursed scrolls of blank paper
+2 uncursed potions of water
+a potion of unholy water
+2 blessed diluted potions of healing
+3 uncursed potions of paralysis
+3 potions of holy water
+2 blessed potions of full healing
+a blessed ring of teleport control
+an uncursed ring of polymorph control
+a wand of fire (0:7)
+a wand of fire (0:7)
+a wand of teleportation (0:6)
+a wand of secret door detection (0:10)
+a wand of secret door detection (0:15)
+a wand of lightning (0:5)
+a wand of digging (0:8)
+a wand of digging (2:8)
+a wand of fire (1:6)
+a wand of wishing (0:2)
+a rusty wand of polymorph (0:6)
+a rusty wand of digging (1:15)
+a wand of striking (0:8)
+a wand of fire (0:6)
+a wand of slow monster (0:4)
+a wand of lightning (0:7)
+a wand of digging (0:6)
+a wand of undead turning (0:4)
+a wand of fire (0:7)
+a wand of digging (0:4)
+a wand of fire (0:6)
+a can of grease (0:21)
+a blessed tinning kit (0:63)
+a magic harp (0:4)
+a frost horn (0:5)
+an uncursed leash
+an uncursed garnet stone
+2 uncursed jade stones
+7 uncursed chrysoberyl stones
+2 uncursed opals
+an uncursed sapphire
+4 uncursed rubies
+2 uncursed jet stones
+6 uncursed fluorite stones
+3 uncursed diamonds
+3 uncursed amethyst stones
+3 uncursed agate stones
+3 uncursed amber stones
+4 uncursed jasper stones
+an uncursed turquoise stone
+6 uncursed emeralds
+T - an uncursed amulet of life saving (being worn)
+i - a blessed rustproof +6 long sword (wielded in other hand)
+v - the blessed rustproof +7 Stormbringer (weapon in hand)
+d - a blessed rustproof +4 pair of gauntlets of power (being worn)
+g - an uncursed fireproof +4 T-shirt (being worn)
+l - a blessed +4 silver dragon scale mail (being worn)
+w - a blessed fireproof +4 pair of speed boots (being worn)
+E - an uncursed rustproof +4 helm of telepathy (being worn)
+H - an uncursed fireproof +4 cloak of magic resistance (being worn)
+h - an uncursed lizard corpse
+o - the cursed Book of the Dead
+c - an uncursed ring of free action named nc (on right hand)
+R - an uncursed +2 ring of increase damage (on left hand)
+e - a wand of death (0:4)
+j - a wand of cancellation (0:7)
+k - a wand of lightning (0:1)
+x - a wand of fire (0:8)
+z - a wand of fire (0:5)
+C - a wand of teleportation (0:5)
+F - a cursed wand of death (0:3)
+M - a wand of teleportation (0:5)
+f - a blessed +0 unicorn horn named nc
+n - the Bell of Opening (0:2)
+p - an uncursed towel
+r - an uncursed rusty skeleton key
+s - a blessed greased bag of holding named uncursed
+J - an uncursed sack named hw rc
+N - the uncursed Candelabrum of Invocation (7 candles attached)
+Q - the blessed rusty Master Key of Thievery
+y - the blessed Heart of Ahriman
+an uncursed amulet of magical breathing
+an uncursed amulet of life saving
+an uncursed amulet of unchanging
+an uncursed amulet of life saving
+an uncursed amulet of reflection
+a +0 bullwhip
+an uncursed +0 pair of jumping boots
+an uncursed +0 cloak of magic resistance
+an uncursed +1 oilskin cloak
+an uncursed +0 pair of water walking boots
+an uncursed +0 pair of levitation boots
+an uncursed tin of titan meat
+an uncursed tin of Wizard of Yendor meat
+an uncursed tripe ration
+3 blessed tins of nurse meat
+9 uncursed lumps of royal jelly
+an uncursed fortune cookie
+2 uncursed lizard corpses
+an uncursed cream pie
+an uncursed candy bar
+11 uncursed food rations
+an uncursed pancake
+2 uncursed lembas wafers
+an uncursed sprig of wolfsbane
+an uncursed slime mold
+2 uncursed cloves of garlic
+an uncursed scroll of teleportation
+an uncursed scroll of identify
+an uncursed scroll of remove curse
+2 uncursed scrolls of stinking cloud
+an uncursed scroll of gold detection
+an uncursed scroll of identify
+7 uncursed scrolls of teleportation named c
+an uncursed scroll of enchant armor
+10 uncursed scrolls of blank paper
+2 blessed scrolls of remove curse
+2 uncursed scrolls of charging
+a blessed scroll of charging
+3 uncursed scrolls of earth
+a blessed potion of full healing
+an uncursed potion of extra healing
+a cursed potion of invisibility
+an uncursed potion of full healing
+an uncursed potion of gain energy
+a blessed potion of restore ability
+an uncursed potion of extra healing
+3 uncursed potions of object detection
+an uncursed diluted potion of gain level
+3 uncursed potions of gain level
+9 potions of holy water
+3 uncursed potions of speed
+2 uncursed potions of levitation
+8 uncursed potions of healing
+an uncursed ring of levitation
+an uncursed ring of polymorph control
+an uncursed ring of teleport control
+an uncursed ring of searching named nc
+an uncursed ring of shock resistance named nc
+an uncursed ring of conflict named nc
+an uncursed ring of sustain ability
+an uncursed ring of free action
+an uncursed ring of invisibility named nc
+a wand of lightning (0:2)
+a wand of cold (0:4)
+a wand of fire (0:6)
+a wand of cold (0:3)
+a wand of fire (0:8)
+a wand of speed monster (0:6)
+a wand of polymorph (0:5)
+a wand of fire (0:6)
+a wand of digging (0:4)
+a wand of enlightenment (0:8)
+a wand of teleportation (0:4)
+a wand of digging (0:7)
+a wand of undead turning (0:5)
+a wand of digging (0:4)
+a rusty tinning kit (0:45)
+an uncursed magic whistle
+a +0 unicorn horn
+a blessed oil lamp
+a blessed magic marker (0:24)
+a +0 pick-axe
+an uncursed sack named gems
+a can of grease (0:13)
+an uncursed magic whistle
+an uncursed rusty stethoscope
+a magic marker (1:25)
+an uncursed blindfold
+4 uncursed jade stones
+12 uncursed turquoise stones
+15 uncursed amethyst stones
+9 uncursed diamonds
+6 uncursed jasper stones
+10 uncursed emeralds
+20 uncursed rubies
+a cursed aquamarine stone
+4 uncursed sapphires
+a cursed amber stone
+an uncursed amber stone
+5 uncursed dilithium crystals
+15 uncursed obsidian stones
+3 uncursed aquamarine stones
+4 uncursed jet stones
+4 uncursed citrine stones
+9 uncursed chrysoberyl stones
+2 uncursed agate stones
+2 uncursed topaz stones
+2 uncursed black opals
+an uncursed garnet stone
+7 cursed jade stones
+5 uncursed fluorite stones
+2 blessed scrolls of remove curse
+a potion of holy water

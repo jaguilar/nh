@@ -63,7 +63,7 @@ func TestParseErosions(t *testing.T) {
 	} {
 		i, err := Parse(tc.string)
 		if assert.Nil(t, err) {
-			assert.Equal(t, tc.Erosion, i.Erosion)
+			assert.Equal(t, tc.Erosion, i.Erosion, "%s", tc.string)
 		}
 	}
 }
@@ -98,7 +98,3 @@ func TestNamed(t *testing.T) {
 func TestCalled(t *testing.T) {
 	assert.Equal(t, "sickness", mustParse("e - a potion called sickness").Class.Called)
 }
-
-// TODO(jaguilar): gather a large corpus of items and verify that we can parse them
-// correctly. This will be especially important once we are interpreting and limiting the
-// item class.

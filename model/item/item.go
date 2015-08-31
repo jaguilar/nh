@@ -35,6 +35,10 @@ type Item struct {
 
 	// The size of the stack of this item we have.
 	Stack int
+
+	// TODO(jaguilar): Figure out how to represent the candelabrum of invocation.
+	// Do we need a map of "special" properties? What about things like comestible
+	// age? Maybe an empty interface to support that kind of thing?
 }
 
 // String is part of the Stringer interface.
@@ -194,14 +198,14 @@ func (e ErosionLevel) Prefix() string {
 // Enhancement represents the enhancement level of an item.
 type Enhancement struct {
 	Known bool
-	int
+	Value int
 }
 
 func (e Enhancement) String() string {
 	if !e.Known {
 		return ""
 	}
-	return fmt.Sprintf("%+d", e.int)
+	return fmt.Sprintf("%+d", e.Value)
 }
 
 // Charge tells the charge state of an item. If the item is of a type that is
